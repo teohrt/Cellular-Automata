@@ -1,5 +1,5 @@
-all: gameOfLife.cpp
-	g++ gameOfLife.cpp -o gameOfLife -Wall -Werror -ggdb -funroll-loops -lncurses
+all: main.cpp
+	g++ gameOfLife.cpp main.cpp wolfram.cpp -o automata -Wall -Werror -ggdb -funroll-loops -lncurses
 
 clean :
-	rm gameOfLife
+	rm automata

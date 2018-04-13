@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <ncurses.h>
+#include "gameOfLife.h"
 
 using namespace std;
 
@@ -11,33 +12,15 @@ const char ALIVE = 'X';
 const char DEAD = '.';
 char board[BOARD_Y][BOARD_X];
 char update[BOARD_Y][BOARD_X];
-string FILENAMES[] = { "explosion.txt", "glider_gun.txt" } ;
-
-bool load_file();
-void start_simulation();
-void update_round();
-
-int main() {
-    if (load_file()) {
-        start_simulation();
-    }
-    else {
-        cout << "Error Loading File" << endl;
-    }
-    return 0;
-}
+string FILENAMES[] = { "explosion.txt", "glider_gun.txt", "spaceship.txt" } ;
 
 bool load_file()  {
     ifstream loadFile;
-    cout << "This is a C++ simulator of Conway's Game of Life." << endl;
-    cout << "Type the number of the file you'd like to run." << endl;
-    cout << "Followed by ENTER." << endl;
-    cout << "0: Explosion" << endl << endl;
-    cout << "1: Glider Gun" << endl << endl;
-
+    cout << "Type the number of the initial state file you'd like to load, then hit ENTER." << endl;
+    cout << "0: Explosion State" << endl << "1: Glider Gun State" << endl << "2: Spaceship State" << endl << endl;
 
     int choice;
-    cin>>choice;
+    cin >> choice;
 
     loadFile.open(FILENAMES[choice].c_str());
     if (!loadFile) return false; //File not found
@@ -54,10 +37,10 @@ bool load_file()  {
 
 void start_simulation() {
     int roundCount = 0;
+    //Initialize ncurses for a clean screen
     initscr();
     raw();
     noecho();
-    //curs_set(0);
     keypad(stdscr, TRUE);
     mvprintw(0, 0, "Press any key to start the simulation. ESC to quit...");
     refresh();
@@ -75,6 +58,7 @@ void start_simulation() {
         refresh();
     }
     endwin();
+    //Kill ncurses
 }
 
 /*
@@ -129,7 +113,7 @@ void update_round() {
             if (board[y][x] == ALIVE && count < 2) {                        //Rule Number 1
                 temp[y][x] = DEAD;
             }
-            else if (board[y][x] == ALIVE && (count == 2 || count == 3)) {   //Rule Number 2
+            else if (board[y][x] == ALIVE && (count == 2 || count == 3)) {  //Rule Number 2
                 temp[y][x] = ALIVE;
             }
             else if (board[y][x] == ALIVE && count > 3) {                   //Rule Number 3
