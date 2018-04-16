@@ -1,5 +1,7 @@
 #include <iostream>
 #include "wolfram.h"
+#include <limits.h>
+#include <stdio.h>
 
 using namespace std;
 
@@ -7,14 +9,19 @@ const int BOARD_Y = 21;
 const int BOARD_X = 80;
 
 // Binary conversion of decimal user input in future
-int ruleset[8] = { 0, 1, 0, 1, 1, 0, 1, 0};
+int ruleset[8]; //= { 0, 1, 0, 1, 1, 0, 1, 0};
 int wolframBoard[BOARD_Y][BOARD_X] = { };
 int gen;
 
 void automaton() {
-    //Start with 1 in the middle for tradition
+
+    //1 in the middle for the traditional initial state
     wolframBoard[0][BOARD_X/2] = 1;
 
+    //Get user's input, convert to binary and initialize the rule set array
+    handle_user_input();
+
+    //Run the ruleset on the initial state
     while(gen < BOARD_Y - 1) {
         find_next_generation();
     }
@@ -78,4 +85,28 @@ int rule (int a, int b, int c) {
     //else (a == 0 && b == 0 && c == 0) {
         return ruleset[7];
     //}
+}
+
+void handle_user_input()
+{
+    cout << "Type in the number of the rule you'd like to run." << endl;
+    unsigned x;
+    cin >> x;
+
+    //Grabs the flipped binary value and inserts into array
+    for (int i = sizeof(x) * CHAR_BIT; i--; )
+    {
+        if (i < 8) { 
+            char temp = ('0' + ((x >> i) & 1));
+            int x = temp - '0';
+            ruleset[i] = x; 
+        }
+    }
+
+    //Flip the array
+    for (int i = 0; i < 8/2; i++) {
+        int temp = ruleset[i];
+        ruleset[i] = ruleset[7 - i];
+        ruleset[7 - i] = temp;
+    }
 }
