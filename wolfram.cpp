@@ -2,6 +2,7 @@
 #include "wolfram.h"
 #include <limits.h>
 #include <stdio.h>
+#include <ncurses.h>
 
 using namespace std;
 
@@ -14,7 +15,6 @@ int wolframBoard[BOARD_Y][BOARD_X] = { };
 int gen;
 
 void automaton() {
-
     //1 in the middle for the traditional initial state
     wolframBoard[0][BOARD_X/2] = 1;
 
@@ -26,20 +26,33 @@ void automaton() {
         find_next_generation();
     }
     print_generations();
+
+    mvprintw(0, 0, "Press any key to continue or ESC to quit.");
+    refresh();
+    switch(getch()) {
+        case 27:
+            endwin();
+            exit(1);
+            break;
+    }
+    gen = 0;
+    automaton();
 }
 
 void print_generations() {
+    clear();
     for (int i = 0; i < BOARD_Y; i++) {
         for (int j = 0; j < BOARD_X; j++) {
             if (wolframBoard[i][j] == 0) {
-                cout << " ";
+                mvprintw(i, j, " ");
             }
             else {
-                cout << "X";
+                mvprintw(i, j, "X");
             }
         }
         cout << endl;
     }
+    refresh();
 }
 
 void find_next_generation() {
@@ -88,12 +101,31 @@ int rule (int a, int b, int c) {
 }
 
 void handle_user_input()
-{
-    cout << "Type in the number of the rule you'd like to run." << endl;
-    unsigned x;
-    cin >> x;
+{   clear();
+    mvprintw(0, 0, "Type in the number of the rule you'd like to run and press enter.");
+    refresh();
 
-    //Grabs the flipped binary value and inserts into array
+    //trick to get string of input from user rather than typical ncurses single char ASCII value inputs
+    string input;
+
+    //terminal does the editing
+    nocbreak();
+    echo();
+    //reads from buffer after ENTER
+    int ch = getch();
+
+    while (ch !=  '\n') {
+        input.push_back(ch);
+        ch = getch();
+    }
+    //converts the user's string to int
+    int x = stoi(input);
+
+    //fix ncurses settings
+    raw();
+    noecho();
+
+    //Grabs the flipped binary value from the int and inserts into array
     for (int i = sizeof(x) * CHAR_BIT; i--; )
     {
         if (i < 8) { 

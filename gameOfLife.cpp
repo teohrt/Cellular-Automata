@@ -15,12 +15,44 @@ char update[BOARD_Y][BOARD_X];
 string FILENAMES[] = { "explosion.txt", "glider_gun.txt", "spaceship.txt" } ;
 
 bool load_file()  {
-    ifstream loadFile;
-    cout << "Type the number of the initial state file you'd like to load, then hit ENTER." << endl;
-    cout << "0: Explosion State" << endl << "1: Glider Gun State" << endl << "2: Spaceship State" << endl << endl;
+    //Initialize ncurses for a clean screen
+    initscr();
+    raw();
+    noecho();
+    keypad(stdscr, TRUE);
 
     int choice;
-    cin >> choice;
+    ifstream loadFile;
+    bool run = true;
+    clear();
+    while(run) {  
+        mvprintw(0, 0, "Type the number of the initial state file you'd like to load.");
+        mvprintw(1, 0, "0: Explosion State");
+        mvprintw(2, 0, "1: Glider Gun State");
+        mvprintw(3, 0, "2: Spaceship State");
+        refresh();
+        switch (getch()) {
+            case 48: 
+                choice = 0;
+                run = false;
+                break;
+            case 49:
+                choice = 1;
+                run = false;
+                break;
+            case 50:
+                choice = 2;
+                run = false;
+                break;
+
+            default:
+                mvprintw(0, 5, "You didn't type an option");
+                refresh();
+                break;
+        }
+        break;
+    }
+    clear();
 
     loadFile.open(FILENAMES[choice].c_str());
     if (!loadFile) return false; //File not found
@@ -37,11 +69,7 @@ bool load_file()  {
 
 void start_simulation() {
     int roundCount = 0;
-    //Initialize ncurses for a clean screen
-    initscr();
-    raw();
-    noecho();
-    keypad(stdscr, TRUE);
+    clear();
     mvprintw(0, 0, "Press any key to start the simulation. ESC to quit...");
     refresh();
     while(getch() != 27){
