@@ -16,7 +16,7 @@ int main() {
 void menu() {
     cout << "C++ Implementations of Different Cellular Automata" << endl;
     cout << "Type the number of the automaton you'd like to run, then hit ENTER." << endl;
-    cout << "0: Wolfram's Elementary CA" << endl << "1: Conway's Game of Life" << endl << endl;
+    cout << "0: Wolfram's Elementary CA - Rule 90" << endl << "1: Conway's Game of Life" << endl << endl;
 
     int choice;
     cin >> choice;
@@ -33,6 +33,7 @@ void menu() {
             break;
     }
 }
+
 void gameOfLife() {
     if (load_file()) {
         start_simulation();
@@ -43,5 +44,5 @@ void gameOfLife() {
 }
 
 void wolfram() {
-    better_structure();
+    automaton();
 }
