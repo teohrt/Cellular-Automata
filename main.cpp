@@ -18,16 +18,17 @@ int main() {
 }
 
 void menu() {
+    //Initialize ncurses
     initscr();
     raw();
     noecho();
     keypad(stdscr, TRUE);
     while(1){
         clear();
-        mvprintw(0, 0, "C++ Implementations of Different Cellular Automata");
-        mvprintw(1, 0, "Type the number of the automaton you'd like to run");
-        mvprintw(2, 0, "0: Wolfram's Elementary CA - Rule 90");
-        mvprintw(3, 0, "1: Conway's Game of Life");
+        mvprintw(3, 5, "C++ Implementations of Different Cellular Automata");
+        mvprintw(4, 5, "Type the number of the automaton you'd like to run");
+        mvprintw(6, 17, "0: Wolfram's Elementary CA");
+        mvprintw(7, 17, "1: Conway's Game of Life");
         refresh();
         switch (getch()) {
             case 48:

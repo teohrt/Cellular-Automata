@@ -15,12 +15,6 @@ char update[BOARD_Y][BOARD_X];
 string FILENAMES[] = { "explosion.txt", "glider_gun.txt", "spaceship.txt" } ;
 
 bool load_file()  {
-    //Initialize ncurses for a clean screen
-    initscr();
-    raw();
-    noecho();
-    keypad(stdscr, TRUE);
-
     int choice;
     ifstream loadFile;
     bool run = true;
@@ -52,7 +46,6 @@ bool load_file()  {
         }
         break;
     }
-    clear();
 
     loadFile.open(FILENAMES[choice].c_str());
     if (!loadFile) return false; //File not found

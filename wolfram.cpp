@@ -27,7 +27,7 @@ void automaton() {
     }
     print_generations();
 
-    mvprintw(0, 0, "Press any key to continue or ESC to quit.");
+    mvprintw((BOARD_Y + 2), 0, "Press any key to continue or ESC to quit.");
     refresh();
     switch(getch()) {
         case 27:
@@ -101,14 +101,20 @@ int rule (int a, int b, int c) {
 }
 
 void handle_user_input()
-{   clear();
-    mvprintw(0, 0, "Type in the number of the rule you'd like to run and press enter.");
+{   
+    clear();
+    mvprintw(4, 14, "Type in the integer of the rule");
+    mvprintw(5, 19, "to see the evolution."); 
+    mvprintw(6, 7, "(Numbers 0 - 255 are all possible rule sets)");
+    mvprintw(7, 24, "Press ENTER.");
+    mvprintw(2, 2, "Rule 90, 30, 105, 182, 147 are interesting generations.");
+    
     refresh();
 
-    //trick to get string of input from user rather than typical ncurses single char ASCII value inputs
+    //Trick to get string of input from user rather than the typical ncurses single char ASCII value 
     string input;
 
-    //terminal does the editing
+    //Terminal does the editing
     nocbreak();
     echo();
     //reads from buffer after ENTER
