@@ -106,9 +106,10 @@ void handle_user_input()
     mvprintw(9, 24, "Type in the integer of the rule");
     mvprintw(10, 29, "to see the evolution."); 
     mvprintw(11, 17, "(Numbers 0 - 255 are all possible rule sets)");
-    mvprintw(13, 34, "Press ENTER.");
-    mvprintw(15, 15, "These generations would continue to evolve infinitely");
-    mvprintw(16, 21, "But ... our terminal is only so big!");
+    mvprintw(13, 29, "Then press press ENTER.");
+    mvprintw(14, 34, "('Q' to QUIT)");
+    mvprintw(16, 15, "These generations would continue to evolve infinitely");
+    mvprintw(17, 21, "But ... our terminal is only so big!");
     refresh();
 
     //Trick to get string of input from user rather than the typical ncurses single char ASCII value 
