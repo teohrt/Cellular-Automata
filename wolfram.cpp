@@ -1,8 +1,8 @@
 #include <iostream>
-#include "wolfram.h"
 #include <limits.h>
 #include <stdio.h>
 #include <ncurses.h>
+#include "wolfram.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ void automaton() {
     }
     print_generations();
 
-    mvprintw((BOARD_Y + 2), 0, "Press any key to continue or ESC to quit.");
+    mvprintw((BOARD_Y), 0, "Press any key to continue or ESC to quit.");
     refresh();
     switch(getch()) {
         case 27:
@@ -75,40 +75,44 @@ void find_next_generation() {
 //This function points to the ruleset array for the predetermined future state determined by the current environment's binary representation.
 int rule (int a, int b, int c) {
     if (a == 1 && b == 1 && c == 1) {
-        return ruleset[0];
+        return ruleset[7];
     }
     if (a == 1 && b == 1 && c == 0) {
-        return ruleset[1];
-    }
-    if (a == 1 && b == 0 && c == 1) {
-        return ruleset[2];
-    }
-    if (a == 1 && b == 0 && c == 0) {
-        return ruleset[3];
-    }
-    if (a == 0 && b == 1 && c == 1) {
-        return ruleset[4];
-    }
-    if (a == 0 && b == 1 && c == 0) {
-        return ruleset[5];
-    }
-    if (a == 0 && b == 0 && c == 1) {
         return ruleset[6];
     }
+    if (a == 1 && b == 0 && c == 1) {
+        return ruleset[5];
+    }
+    if (a == 1 && b == 0 && c == 0) {
+        return ruleset[4];
+    }
+    if (a == 0 && b == 1 && c == 1) {
+        return ruleset[3];
+    }
+    if (a == 0 && b == 1 && c == 0) {
+        return ruleset[2];
+    }
+    if (a == 0 && b == 0 && c == 1) {
+        return ruleset[1];
+    }
     //else (a == 0 && b == 0 && c == 0) {
-        return ruleset[7];
+        return ruleset[0];
     //}
 }
 
 void handle_user_input()
 {   
     clear();
-    mvprintw(4, 14, "Type in the integer of the rule");
-    mvprintw(5, 19, "to see the evolution."); 
-    mvprintw(6, 7, "(Numbers 0 - 255 are all possible rule sets)");
-    mvprintw(7, 24, "Press ENTER.");
-    mvprintw(2, 2, "Rule 90, 30, 105, 182, 147 are interesting generations.");
-    
+    mvprintw(3, 21, "-------------------------------------");
+    mvprintw(4, 21, "WOLFRAM ELEMENTARY CELLULAR AUTOMATON");
+    mvprintw(5, 21, "-------------------------------------");
+    mvprintw(7, 10, "Rule 30, 60, 90, 105, 182, 147 are interesting generations.");
+    mvprintw(9, 24, "Type in the integer of the rule");
+    mvprintw(10, 29, "to see the evolution."); 
+    mvprintw(11, 17, "(Numbers 0 - 255 are all possible rule sets)");
+    mvprintw(13, 34, "Press ENTER.");
+    mvprintw(15, 15, "These generations would continue to evolve infinitely");
+    mvprintw(16, 21, "But ... our terminal is only so big!");
     refresh();
 
     //Trick to get string of input from user rather than the typical ncurses single char ASCII value 
@@ -117,21 +121,21 @@ void handle_user_input()
     //Terminal does the editing
     nocbreak();
     echo();
-    //reads from buffer after ENTER
+    //Reads from buffer after ENTER
     int ch = getch();
 
     while (ch !=  '\n') {
         input.push_back(ch);
         ch = getch();
     }
-    //converts the user's string to int
+    //Converts the user's string to int
     int x = stoi(input);
 
-    //fix ncurses settings
+    //Fix ncurses settings
     raw();
     noecho();
 
-    //Grabs the flipped binary value from the int and inserts into array
+    //Grabs the binary value from the int and inserts into array
     for (int i = sizeof(x) * CHAR_BIT; i--; )
     {
         if (i < 8) { 
@@ -139,12 +143,5 @@ void handle_user_input()
             int x = temp - '0';
             ruleset[i] = x; 
         }
-    }
-
-    //Flip the array
-    for (int i = 0; i < 8/2; i++) {
-        int temp = ruleset[i];
-        ruleset[i] = ruleset[7 - i];
-        ruleset[7 - i] = temp;
     }
 }

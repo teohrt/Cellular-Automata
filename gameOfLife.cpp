@@ -20,10 +20,11 @@ bool load_file()  {
     bool run = true;
     clear();
     while(run) {  
-        mvprintw(0, 0, "Type the number of the initial state file you'd like to load.");
-        mvprintw(1, 0, "0: Explosion State");
-        mvprintw(2, 0, "1: Glider Gun State");
-        mvprintw(3, 0, "2: Spaceship State");
+        mvprintw(5, 19, "Type the number of the initial state file");
+        mvprintw(6, 17, "you'd like to load into Conway's Game of Life");
+        mvprintw(8, 31, "0: Explosion State");
+        mvprintw(9, 31, "1: Glider Gun State");
+        mvprintw(10, 31, "2: Spaceship State");
         refresh();
         switch (getch()) {
             case 48: 

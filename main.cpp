@@ -25,10 +25,13 @@ void menu() {
     keypad(stdscr, TRUE);
     while(1){
         clear();
-        mvprintw(3, 5, "C++ Implementations of Different Cellular Automata");
-        mvprintw(4, 5, "Type the number of the automaton you'd like to run");
-        mvprintw(6, 17, "0: Wolfram's Elementary CA");
-        mvprintw(7, 17, "1: Conway's Game of Life");
+        mvprintw(3, 27, "---------------------");
+        mvprintw(4, 27, "CELLULAR AUTOMATA CLI");
+        mvprintw(5, 27, "---------------------");
+        mvprintw(7, 11, "C++ Implementations of Different Cellular Automata");
+        mvprintw(8, 11, "Type the number of the automaton you'd like to run");
+        mvprintw(10, 24, "0: Wolfram's Elementary CA");
+        mvprintw(11, 24, "1: Conway's Game of Life");
         refresh();
         switch (getch()) {
             case 48:
