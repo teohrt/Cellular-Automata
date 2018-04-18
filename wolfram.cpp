@@ -32,6 +32,7 @@ void automaton() {
             return;
     }
     gen = 0;
+    clear();
     automaton();
 }
 
@@ -98,7 +99,6 @@ int rule (int a, int b, int c) {
 
 void handle_user_input()
 {   
-    clear();
     mvprintw(3, 21, "-------------------------------------");
     mvprintw(4, 21, "WOLFRAM ELEMENTARY CELLULAR AUTOMATON");
     mvprintw(5, 21, "-------------------------------------");
@@ -136,8 +136,23 @@ void handle_user_input()
         return;
     }
 
+    //Error handling the user's input string
+    bool only_numbers = (input.find_first_not_of("0123456789") == string::npos);
+
+    if (!only_numbers) {
+        mvprintw(20, 12, "!!!!!!Make sure to type a number between 0 and 255!!!!!!");
+        handle_user_input();
+        return;
+    }
+
     //Converts the user's string to int
     int x = stoi(input);
+
+    if (x < 0 || x > 255) {
+        mvprintw(20, 12, "!!!!!!Make sure to type a number between 0 and 255!!!!!!");
+        handle_user_input();
+        return;
+    }
 
     //Grabs the binary value from the int and inserts into array
     for (int i = sizeof(x) * CHAR_BIT; i--; )
