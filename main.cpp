@@ -1,30 +1,22 @@
 #include <iostream>
+#include <ncurses.h>
+#include "main.h"
 #include "gameOfLife.h"
 #include "wolfram.h"
-#include <ncurses.h>
-
-using namespace std;
-
-const int BOARD_Y = 21;
-const int BOARD_X = 80;
-
-void menu();
-void gameOfLife();
-void wolfram();
 
 int main() {
-    menu();
-    return 0;
-}
-
-void menu() {
     //Initialize ncurses
     initscr();
     raw();
     noecho();
     keypad(stdscr, TRUE);
-    while(1){
-        clear();
+    menu();
+    return 0;
+}
+
+void menu() {
+    bool run = true;
+    while(run){
         mvprintw(3, 27, "---------------------");
         mvprintw(4, 27, "CELLULAR AUTOMATA CLI");
         mvprintw(5, 27, "---------------------");
@@ -32,20 +24,27 @@ void menu() {
         mvprintw(8, 11, "Type the number of the automaton you'd like to run");
         mvprintw(10, 24, "0: Wolfram's Elementary CA");
         mvprintw(11, 24, "1: Conway's Game of Life");
+        mvprintw(13, 22, "Press ESC to quit the program");
         refresh();
         switch (getch()) {
             case 48:
                 wolfram();
+                run = false;
                 break;
             case 49:
                 endwin();
                 gameOfLife();
+                run = false;
+                break;
+            case 27:
+                endwin();
+                exit(0);
                 break;
             default:
-                cout << "You didn't type an option" << endl;
+                mvprintw(15, 21, "!!!YOU DIDN'T TYPE AN OPTION!!!");
+                refresh();
                 break;
         }
-        break;
     }
 }
 

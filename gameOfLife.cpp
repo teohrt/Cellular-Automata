@@ -3,11 +3,8 @@
 #include <fstream>
 #include <ncurses.h>
 #include "gameOfLife.h"
+#include "main.h"
 
-using namespace std;
-
-const int BOARD_Y = 21;
-const int BOARD_X = 80;
 const char ALIVE = 'X'; 
 const char DEAD = '.';
 char board[BOARD_Y][BOARD_X];
@@ -41,11 +38,10 @@ bool load_file()  {
                 break;
 
             default:
-                mvprintw(0, 5, "You didn't type an option");
+                mvprintw(12, 28, "You didn't type an option");
                 refresh();
                 break;
         }
-        break;
     }
 
     loadFile.open(FILENAMES[choice].c_str());
@@ -79,8 +75,9 @@ void start_simulation() {
         mvprintw(BOARD_Y, 0, "Press any key to progress the rounds. ESC to quit.                 Round: %d", roundCount);
         refresh();
     }
-    endwin();
-    //Kill ncurses
+    clear();
+    menu();
+    return;
 }
 
 /*

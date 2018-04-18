@@ -3,11 +3,7 @@
 #include <stdio.h>
 #include <ncurses.h>
 #include "wolfram.h"
-
-using namespace std;
-
-const int BOARD_Y = 21;
-const int BOARD_X = 80;
+#include "main.h"
 
 // Binary conversion of decimal user input in future
 int ruleset[8]; //= { 0, 1, 0, 1, 1, 0, 1, 0};
@@ -31,9 +27,9 @@ void automaton() {
     refresh();
     switch(getch()) {
         case 27:
-            endwin();
-            exit(1);
-            break;
+            clear();
+            menu();
+            return;
     }
     gen = 0;
     automaton();
@@ -117,7 +113,7 @@ void handle_user_input()
 
     //Trick to get string of input from user rather than the typical ncurses single char ASCII value 
     string input;
-
+    
     //Terminal does the editing
     nocbreak();
     echo();
@@ -128,12 +124,19 @@ void handle_user_input()
         input.push_back(ch);
         ch = getch();
     }
-    //Converts the user's string to int
-    int x = stoi(input);
 
     //Fix ncurses settings
     raw();
     noecho();
+
+    if (input == "Q") {
+        clear();
+        menu();
+        return;
+    }
+
+    //Converts the user's string to int
+    int x = stoi(input);
 
     //Grabs the binary value from the int and inserts into array
     for (int i = sizeof(x) * CHAR_BIT; i--; )
