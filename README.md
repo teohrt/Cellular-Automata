@@ -1,4 +1,3 @@
-[![Maintenance](https://img.shields.io/badge/Maintained%20%3F-Yes!-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # Cellular-Automata
