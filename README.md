@@ -1,5 +1,10 @@
+[![Maintenance](https://img.shields.io/badge/Maintained%20%3F-Yes!-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # Cellular-Automata
 This is a C++ CLI implementation of Wolfram's and Conway's famous cellular automata. It can take user input for different rulesets used for Wolfram's Elementary CA. It can also observe generations of "Conway's Game of Life" from the initial state files provided.
+
+![How to Use](/CA.gif)
 
 These directions will assume you are using a unix or unix-like environment.
 ### Prerequisites
