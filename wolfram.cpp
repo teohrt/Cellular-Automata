@@ -99,6 +99,7 @@ int rule (int a, int b, int c) {
 
 void handle_user_input()
 {   
+    clear();
     mvprintw(3, 21, "-------------------------------------");
     mvprintw(4, 21, "WOLFRAM ELEMENTARY CELLULAR AUTOMATON");
     mvprintw(5, 21, "-------------------------------------");
